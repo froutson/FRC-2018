@@ -9,7 +9,9 @@
 package org.usfirst.frc.team3559.robot.subsystems;
 
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -25,9 +27,14 @@ public class DriveBase extends Subsystem {
 
 	private WPI_TalonSRX m_leftMaster, m_rightMaster;
 	private WPI_TalonSRX m_leftSlave, m_rightSlave;
-	private DifferentialDrive drive;
+	private DifferentialDrive driveBase;
+	private Timer m_timer = new Timer();
+	private ADXRS450_Gyro gyro;
 	//private boolean brake = true;						//May not be needed??
 	private double speedModifier = 0.8;					//Adjust the max input for speed limiting.
+	private double Kp = 0.03;
+	private double angle;
+	
 	
 	public DriveBase(){
 		super();
@@ -45,9 +52,11 @@ public class DriveBase extends Subsystem {
 		m_rightSlave.set(ControlMode.Follower, m_rightMaster.getDeviceID());
 		// TODO: Add code for sensor input/feedback. Close the loop!
 		
-		drive = new DifferentialDrive(m_leftMaster, m_rightMaster);
-		drive.setSafetyEnabled(true);
-			
+		driveBase = new DifferentialDrive(m_leftMaster, m_rightMaster);
+		driveBase.setSafetyEnabled(true);
+		
+		gyro = new ADXRS450_Gyro();
+		
 	}
 		
     public void initDefaultCommand() {
@@ -56,11 +65,24 @@ public class DriveBase extends Subsystem {
     }
     
     public void drive(double left, double right) {
-    	drive.tankDrive(-left, -right);
+    	driveBase.tankDrive(-left, -right);
     }
     
     public void stop() {
     	this.drive(0.0, 0.0);
+    }
+    
+    public void moveAhead(double time) {
+    	m_timer.reset();
+    	m_timer.start();
+    	gyro.reset();
+    	if (m_timer.get() < time) {
+        	angle = gyro.getAngle();
+    		driveBase.arcadeDrive(0.5, -angle*Kp);
+    		Timer.delay(0.004);
+    	} else {
+    		driveBase.stopMotor();
+    	}
     }
     
     /**

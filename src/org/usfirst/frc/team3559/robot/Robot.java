@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team3559.robot.commands.ExampleCommand;
-import org.usfirst.frc.team3559.robot.subsystems.ExampleSubsystem;
+import org.usfirst.frc.team3559.robot.subsystems.Blinkin;
+import org.usfirst.frc.team3559.robot.subsystems.DriveBase;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -23,13 +23,14 @@ import org.usfirst.frc.team3559.robot.subsystems.ExampleSubsystem;
  * project.
  */
 public class Robot extends TimedRobot {
-	public static final ExampleSubsystem kExampleSubsystem
-			= new ExampleSubsystem();
+
+	public static final DriveBase drivebase = new DriveBase();
+	public static final Blinkin blinkin = new Blinkin();
+	
 	public static OI m_oi;
 
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
-
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
