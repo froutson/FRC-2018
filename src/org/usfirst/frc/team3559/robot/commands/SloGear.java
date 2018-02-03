@@ -1,5 +1,7 @@
 package org.usfirst.frc.team3559.robot.commands;
 
+import org.usfirst.frc.team3559.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -9,11 +11,12 @@ public class SloGear extends Command {
 
     public SloGear() {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        requires(Robot.drivebase);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.drivebase.modifySpeed(0.55);
     }
 
     // Called repeatedly when this Command is scheduled to run

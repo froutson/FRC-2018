@@ -91,6 +91,10 @@ public class DriveBase extends Subsystem {
     public void drive(Joystick gamepad) {
     	drive(speedModifier*gamepad.getY(), speedModifier*gamepad.getRawAxis(3));
     }
+    
+    public void modifySpeed(double newSpeed) {
+    	this.speedModifier = newSpeed;
+    }
    
 }
 

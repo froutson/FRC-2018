@@ -1,21 +1,19 @@
 package org.usfirst.frc.team3559.robot.commands;
 
-import org.usfirst.frc.team3559.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class HiGear extends Command {
+public class NoAuto extends Command {
 
-    public HiGear() {
-        requires(Robot.drivebase);
+    public NoAuto() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.drivebase.modifySpeed(0.99);
     }
 
     // Called repeatedly when this Command is scheduled to run
